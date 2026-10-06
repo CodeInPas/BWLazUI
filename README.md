@@ -61,4 +61,10 @@ Contributions, suggestions, and bug reports are very welcome! Feel free to open 
 
 This project is open-source under the [MIT License](https://www.google.com/search?q=LICENSE). Feel free to use it for personal or commercial projects.
 
+## 🙌 Acknowledgments
+
+* [Bootstrap CSS](https://getbootstrap.com/) - For the incredible design system inspiration, color palettes, and aesthetics.
+* [BGRABitmap](https://wiki.freepascal.org/BGRABitmap) - An amazing graphics library that enables transparent rendering and anti-aliasing in Lazarus.
+* [streamlinehq](https://www.streamlinehq.com/icons/bootstrap-icons?icon=ico_JVo7DRhA8NbbqQML) - Visual icon references for the Component Palette.
+
 
