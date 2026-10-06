@@ -61,8 +61,4 @@ Contributions, suggestions, and bug reports are very welcome! Feel free to open 
 
 This project is open-source under the [MIT License](https://www.google.com/search?q=LICENSE). Feel free to use it for personal or commercial projects.
 
-```
 
-<FollowUp label="Repository Ready" query="Is there anything else you would like to add or customize in this English README?"/>
-
-```
