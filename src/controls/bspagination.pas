@@ -104,7 +104,9 @@ end;
 constructor TBsPagination.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
+
 
   Width := 300;
   Height := 38;
@@ -462,7 +464,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+ // Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     Radius := TBsGraphics.GetRadius(Height, FCornerType, 6);
 

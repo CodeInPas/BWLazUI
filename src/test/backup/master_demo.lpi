@@ -38,10 +38,11 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="main_form.pas"/>
+        <Filename Value="unit1.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
       </Unit>
     </Units>
   </ProjectOptions>

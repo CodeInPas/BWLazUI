@@ -75,7 +75,8 @@ end;
 constructor TBsProgress.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   // Ukuran Default
   Width := 200;
@@ -198,7 +199,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  //Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     // 1. Gambar Container (Latar Belakang Progress)
     ContainerColor := TBsTheme.GetDisabledColor;

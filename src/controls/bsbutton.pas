@@ -100,8 +100,8 @@ constructor TBsButton.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   //ControlStyle := ControlStyle + [csOpaque, csCaptureMouse, csDoubleClicks];
-  ControlStyle := ControlStyle - [csOpaque] + [csCaptureMouse];
-  DoubleBuffered := True;
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   TabStop := True;
   FState := bcsNormal;
@@ -311,7 +311,7 @@ begin
 
  // Bmp := TBGRABitmap.Create(Width, Height, BgColor);
  // Bmp := TBGRABitmap.Create(Width, Height);
-  Bmp := TBGRABitmap.Create(Width, Height);
+ Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     // Reset warna dasar
     FillColor := ColorToBGRA(clNone);
@@ -403,7 +403,7 @@ begin
     TBsGraphics.DrawText(Bmp, ClientRect, Caption, Font, TxtColor, bsaCenter, 0);
 
     //Bmp.Draw(Canvas, 0, 0, False);
-    Bmp.Draw(Canvas, 0, 0, True);
+    Bmp.Draw(Canvas, 0, 0, False);
   finally
     Bmp.Free;
   end;

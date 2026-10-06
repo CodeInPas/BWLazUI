@@ -98,7 +98,11 @@ begin
   FItems.OnChange := @ItemsChanged;
 
   // 2. Setup Style Control
-  ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+ // ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
+
+
 
   // 3. Setup Ukuran dan Properti Awal (Memicu WMSize / UpdateLayout secara aman)
   Width := 400;
@@ -352,7 +356,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+//  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+    Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     MainBdColor := TBsTheme.GetBorderColor(btcSecondary, bssOutline); // #dee2e6
 

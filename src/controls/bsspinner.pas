@@ -68,7 +68,8 @@ end;
 constructor TBsSpinner.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   // Ukuran default Spinner
   Width := 32;
@@ -156,7 +157,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+ // Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     BaseColor := TBsTheme.GetBaseColor(FThemeColor);
     Cx := Width div 2;

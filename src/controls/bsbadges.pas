@@ -68,7 +68,8 @@ end;
 constructor TBsBadge.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   AutoSize := True;
   Color := clWindow;
@@ -164,7 +165,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+ // Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     if not Enabled then
     begin

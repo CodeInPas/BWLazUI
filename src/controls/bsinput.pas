@@ -5,7 +5,7 @@ unit bsinput;
 interface
 
 uses
-  Classes, SysUtils, Types, Controls, Graphics, StdCtrls, LMessages, LCLType,
+  Classes, SysUtils, Types, Math, Controls, Graphics, StdCtrls, LMessages, LCLType,
   BGRABitmap, BGRABitmapTypes, bstypes, bsthemes, bsgraphics;
 
 type
@@ -25,6 +25,7 @@ type
     FIsFocused: Boolean;
     FReadOnly: Boolean;
     FOnChange: TNotifyEvent;
+    FUpdatingBounds: Boolean;
 
     procedure SetThemeColor(AValue: TBsThemeColor);
     procedure SetInputSize(AValue: TBsInputSize);
@@ -45,13 +46,14 @@ type
     procedure CMMouseLeave(var Message: TLMessage); message CM_MOUSELEAVE;
     procedure CMEnabledChanged(var Message: TLMessage); message CM_ENABLEDCHANGED;
     procedure CMFontChanged(var Message: TLMessage); message CM_FONTCHANGED;
-    procedure WMSize(var Message: TLMSize); message LM_SIZE;
   protected
     procedure Paint; override;
     procedure Resize; override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
     procedure DoEnter; override;
     procedure DoExit; override;
+    procedure Loaded; override;
+    procedure SetParent(AParent: TWinControl); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -98,7 +100,9 @@ constructor TBsInput.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  // Inisialisasi Dimensi Awal
+  ControlStyle := ControlStyle - [csOpaque] + [csCaptureMouse];
+  DoubleBuffered := True;
+
   Width := 200;
   Height := 38;
   TabStop := True;
@@ -112,6 +116,7 @@ begin
   FReadOnly := False;
   FPlaceholder := 'Enter text...';
   FText := '';
+  FUpdatingBounds := False;
 
   Font.Name := 'Segoe UI';
   Font.Size := 10;
@@ -120,6 +125,7 @@ begin
   // Inisialisasi TEdit internal
   FEdit := TEdit.Create(Self);
   FEdit.Parent := Self;
+  FEdit.SetSubComponent(True);
   FEdit.BorderStyle := bsNone;
   FEdit.AutoSelect := False;
   FEdit.OnChange := @OnInternalEditChange;
@@ -135,39 +141,57 @@ begin
   inherited Destroy;
 end;
 
+procedure TBsInput.Loaded;
+begin
+  inherited Loaded;
+  UpdateEditBounds;
+end;
+
+procedure TBsInput.SetParent(AParent: TWinControl);
+begin
+  inherited SetParent(AParent);
+  if Assigned(FEdit) and (FEdit.Parent <> Self) then
+    FEdit.Parent := Self;
+  UpdateEditBounds;
+end;
+
 procedure TBsInput.UpdateEditBounds;
 var
-  PadX, EditH: Integer;
+  PadX, EditH, NewTop, NewWidth: Integer;
 begin
-  // Guard Clause: Mencegah Access Violation jika FEdit belum ter-instansiasi
-  if not Assigned(FEdit) then Exit;
+  if FUpdatingBounds or not Assigned(FEdit) or (csLoading in ComponentState) or (csDestroying in ComponentState) then Exit;
 
-  case FInputSize of
-    bisSmall:
-      begin
-        PadX := 8;
-        Height := 31;
-      end;
-    bisLarge:
-      begin
-        PadX := 16;
-        Height := 48;
-      end;
-  else
-    // bisMedium
-    PadX := 12;
-    Height := 38;
+  FUpdatingBounds := True;
+  try
+    case FInputSize of
+      bisSmall: PadX := 8;
+      bisLarge: PadX := 16;
+    else
+      PadX := 12;
+    end;
+
+    FEdit.Font.Assign(Font);
+
+    // Gunakan tinggi alami TEdit agar tidak berbenturan dengan nilai internal LCL
+    EditH := FEdit.Height;
+    if EditH < 16 then EditH := 16;
+
+    NewTop := (Height - EditH) div 2;
+    NewWidth := Max(10, Width - (PadX * 2));
+
+    // Eksekusi SetBounds hanya jika terdapat perubahan nilai
+    if (FEdit.Left <> PadX) or (FEdit.Top <> NewTop) or
+       (FEdit.Width <> NewWidth) or (FEdit.Height <> EditH) then
+    begin
+      FEdit.SetBounds(PadX, NewTop, NewWidth, EditH);
+    end;
+
+    FEdit.ReadOnly := FReadOnly;
+    FEdit.Enabled := Enabled;
+    FEdit.Color := clWindow;
+  finally
+    FUpdatingBounds := False;
   end;
-
-  Canvas.Font.Assign(Font);
-  EditH := Canvas.TextHeight('Gy') + 2;
-  if EditH < 16 then EditH := 16;
-
-  FEdit.SetBounds(PadX, (Height - EditH) div 2, Width - (PadX * 2), EditH);
-  FEdit.Font.Assign(Font);
-  FEdit.ReadOnly := FReadOnly;
-  FEdit.Enabled := Enabled;
-  FEdit.Color := clWindow;
 end;
 
 procedure TBsInput.SetThemeColor(AValue: TBsThemeColor);
@@ -181,6 +205,14 @@ procedure TBsInput.SetInputSize(AValue: TBsInputSize);
 begin
   if FInputSize = AValue then Exit;
   FInputSize := AValue;
+
+  case FInputSize of
+    bisSmall: Height := 31;
+    bisLarge: Height := 48;
+  else
+    Height := 38;
+  end;
+
   UpdateEditBounds;
   Invalidate;
 end;
@@ -285,13 +317,6 @@ begin
   Invalidate;
 end;
 
-procedure TBsInput.WMSize(var Message: TLMSize);
-begin
-  inherited;
-  UpdateEditBounds;
-  Invalidate;
-end;
-
 procedure TBsInput.Resize;
 begin
   inherited Resize;
@@ -320,30 +345,25 @@ end;
 procedure TBsInput.Paint;
 var
   Bmp: TBGRABitmap;
-  BgColor, FillColor, BdColor, FocusColor, PhColor: TBGRAPixel;
+  FillColor, BdColor, FocusColor, PhColor: TBGRAPixel;
   Radius, PadX, EditH: Integer;
   PhRect: TRect;
 begin
   if (Width <= 0) or (Height <= 0) then Exit;
 
-  if Assigned(Parent) then
-    BgColor := ColorToBGRA(ColorToRGB(Parent.Color))
-  else
-    BgColor := ColorToBGRA(clBtnFace);
-
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height);
   try
     Radius := TBsGraphics.GetRadius(Height, FCornerType, 6);
 
     // 1. Penentuan Warna Isian & Border
     if not Enabled then
     begin
-      FillColor := BGRA(233, 236, 239, 255); // #e9ecef (Bootstrap disabled bg)
+      FillColor := BGRA(233, 236, 239, 255);
       BdColor := TBsTheme.GetDisabledColor;
     end
     else if FReadOnly then
     begin
-      FillColor := BGRA(248, 249, 250, 255); // #f8f9fa
+      FillColor := BGRA(248, 249, 250, 255);
       BdColor := TBsTheme.GetBorderColor(btcSecondary, bssOutline);
     end
     else
@@ -379,11 +399,11 @@ begin
       EditH := Canvas.TextHeight('Gy') + 2;
       PhRect := Rect(PadX + 2, (Height - EditH) div 2, Width - PadX, (Height + EditH) div 2);
 
-      PhColor := BGRA(108, 117, 125, 180); // #6c757d (Muted gray)
+      PhColor := BGRA(108, 117, 125, 180);
       TBsGraphics.DrawText(Bmp, PhRect, FPlaceholder, Font, PhColor, bsaStart, 0);
     end;
 
-    Bmp.Draw(Canvas, 0, 0, False);
+    Bmp.Draw(Canvas, 0, 0, True);
   finally
     Bmp.Free;
   end;

@@ -1,211 +1,218 @@
-object frmMain: TfrmMain
-  Left = 350
-  Top = 150
-  Caption = 'Bootstrap 5 LCL Components Demo'
-  ClientHeight = 760
-  ClientWidth = 800
-  Color = 16316666
-  OnCreate = FormCreate
-  Position = poScreenCenter
-  LCLVersion = '2.2.6.0'
+object Form1: TForm1
+  Left = 281
+  Height = 528
+  Top = 250
+  Width = 855
+  Caption = 'Form1'
+  ClientHeight = 528
+  ClientWidth = 855
+  LCLVersion = '4.8.0.0'
   object BsNavbar1: TBsNavbar
     Left = 0
-    Top = 0
-    Width = 800
     Height = 56
-    Align = alTop
-    BrandText = 'Bootstrap LCL'
-    ThemeColor = btcDark
-    OnBrandClick = BsNavbar1BrandClick
+    Top = 0
+    Width = 855
+    BrandText = 'Navbar'
+    Items.Strings = (
+      'Home'
+      'Features'
+      'Pricing'
+    )
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
   end
-  object ScrollBox1: TScrollBox
-    Left = 0
-    Top = 56
-    Width = 800
-    Height = 704
-    Align = alClient
-    BorderStyle = bsNone
+  object BsButton1: TBsButton
+    Left = 8
+    Height = 38
+    Top = 64
+    Width = 144
+    Caption = 'BsButton1'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
     TabOrder = 1
-    object BsCard1: TBsCard
-      Left = 20
-      Top = 20
-      Width = 360
-      Height = 200
-      ShowHeader = True
-      ShowFooter = True
-      HeaderText = 'Card Header'
-      FooterText = 'Card Footer'
-      ThemeColor = btcLight
-      CornerType = bctSmall
-    end
-    object BsCard2: TBsCard
-      Left = 400
-      Top = 20
-      Width = 360
-      Height = 200
-      ShowHeader = True
-      ShowFooter = False
-      HeaderText = 'Featured Card'
-      ThemeColor = btcPrimary
-      CornerType = bctSmall
-    end
-    object BsButtonPrimary: TBsButton
-      Left = 20
-      Top = 240
-      Width = 110
-      Height = 38
-      Caption = 'Show Toast'
-      ThemeColor = btcPrimary
-      Style = bssSolid
-      OnClick = BsButtonPrimaryClick
-    end
-    object BsButtonSecondary: TBsButton
-      Left = 140
-      Top = 240
-      Width = 110
-      Height = 38
-      Caption = 'Show Modal'
-      ThemeColor = btcSecondary
-      Style = bssSolid
-      OnClick = BsButtonSecondaryClick
-    end
-    object BsButtonOutline: TBsButton
-      Left = 260
-      Top = 240
-      Width = 130
-      Height = 38
-      Caption = 'Open Offcanvas'
-      ThemeColor = btcSuccess
-      Style = bssOutline
-      OnClick = BsButtonOutlineClick
-    end
-    object BsAlert1: TBsAlert
-      Left = 20
-      Top = 300
-      Width = 740
-      Height = 58
-      Caption = 'This is a primary alert—check it out!'
-      ThemeColor = btcPrimary
-      ShowCloseButton = True
-      OnClose = BsAlert1Close
-    end
-    object BsAlert2: TBsAlert
-      Left = 20
-      Top = 370
-      Width = 740
-      Height = 58
-      Caption = 'A simple danger alert with no close button.'
-      ThemeColor = btcDanger
-      ShowCloseButton = False
-    end
-    object BsProgress1: TBsProgress
-      Left = 20
-      Top = 450
-      Width = 740
-      Height = 20
-      ThemeColor = btcSuccess
-      Value = 25
-      Max = 100
-      Animated = True
-      Striped = True
-    end
-    object BsSpinner1: TBsSpinner
-      Left = 20
-      Top = 490
-      Width = 32
-      Height = 32
-      ThemeColor = btcPrimary
-      SpinnerType = bstBorder
-      AnimationSpeed = 15
-    end
-    object BsInput1: TBsInput
-      Left = 70
-      Top = 490
-      Width = 300
-      Height = 38
-      Placeholder = 'Enter your name...'
-      ThemeColor = btcPrimary
-    end
-    object BsCheckBox1: TBsCheckBox
-      Left = 390
-      Top = 498
-      Width = 150
-      Height = 24
-      Caption = 'Default Checkbox'
-      ThemeColor = btcPrimary
-    end
-    object BsSwitch1: TBsCheckBox
-      Left = 560
-      Top = 498
-      Width = 150
-      Height = 24
-      Caption = 'Toggle Switch'
-      ThemeColor = btcPrimary
-      SwitchToggle = True
-      Checked = True
-    end
-    object BsAccordion1: TBsAccordion
-      Left = 20
-      Top = 550
-      Width = 360
-      Height = 300
-      ThemeColor = btcPrimary
-    end
-    object BsNavTabs1: TBsNavTabs
-      Left = 400
-      Top = 550
-      Width = 360
-      Height = 42
-      ThemeColor = btcPrimary
-      NavStyle = bnsTabs
-    end
+  end
+  object BsButton2: TBsButton
+    Left = 8
+    Height = 38
+    Top = 112
+    Width = 144
+    ThemeColor = btcDanger
+    Caption = 'BsButton2'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+    TabOrder = 2
+  end
+  object BsButton3: TBsButton
+    Left = 8
+    Height = 38
+    Top = 160
+    Width = 144
+    ThemeColor = btcWarning
+    Caption = 'BsButton3'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+    TabOrder = 3
+  end
+  object BsButton4: TBsButton
+    Left = 8
+    Height = 38
+    Top = 208
+    Width = 144
+    ThemeColor = btcSuccess
+    Caption = 'BsButton4'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+    TabOrder = 4
+  end
+  object BsChart1: TBsChart
+    Left = 168
+    Height = 220
+    Top = 64
+    Width = 340
+    Title = 'Performance Analytics'
+    ChartType = bctLine
+    Items = <    
+      item
+        Caption = 'Jan'
+        Value = 45
+        Color = 16608781
+      end    
+      item
+        Caption = 'Feb'
+        Value = 75
+        Color = 5539609
+      end    
+      item
+        Caption = 'Mar'
+        Value = 30
+        Color = 508415
+      end    
+      item
+        Caption = 'Apr'
+        Value = 90
+        Color = 4535772
+      end>
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+  end
+  object BsChart2: TBsChart
+    Left = 520
+    Height = 220
+    Top = 64
+    Width = 340
+    Title = 'Performance Analytics'
+    Items = <    
+      item
+        Caption = 'Jan'
+        Value = 45
+        Color = 16608781
+      end    
+      item
+        Caption = 'Feb'
+        Value = 75
+        Color = 5539609
+      end    
+      item
+        Caption = 'Mar'
+        Value = 30
+        Color = 508415
+      end    
+      item
+        Caption = 'Apr'
+        Value = 90
+        Color = 4535772
+      end>
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+  end
+  object BsPagination1: TBsPagination
+    Left = 160
+    Height = 38
+    Top = 488
+    Width = 344
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+    TabOrder = 7
+  end
+  object BsAccordion1: TBsAccordion
+    Left = 168
+    Height = 173
+    Top = 296
+    Width = 288
+  end
+  object BsAlert1: TBsAlert
+    Left = 472
+    Height = 58
+    Top = 360
+    Width = 300
+    ThemeColor = btcDanger
+    Caption = 'BsAlert1'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
   end
   object BsToast1: TBsToast
-    Left = 430
-    Top = 70
-    Width = 350
-    Height = 100
-    Visible = False
-    ThemeColor = btcPrimary
-    Title = 'Bootstrap Toast'
-    Subtitle = 'Just now'
+    Left = 512
+    Height = 85
+    Top = 440
+    Width = 300
+    Title = 'Notification'
     MessageText = 'Hello, world! This is a toast message.'
-    Delay = 3000
-    Animated = True
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    ParentFont = False
   end
-  object BsModal1: TBsModal
-    Left = 0
-    Top = 0
-    Width = 800
-    Height = 760
-    Align = alClient
-    Visible = False
-    ThemeColor = btcPrimary
-    Title = 'Modal Title'
-    TextBody = 'Modal body text goes here.'
-    ModalWidth = 400
-    ShowFooter = True
-    OnModalResult = BsModal1ModalResult
+  object BsDropdown1: TBsDropdown
+    Left = 8
+    Height = 38
+    Top = 256
+    Width = 144
+    Caption = 'BsDropdown1'
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    ParentFont = False
+    TabOrder = 11
   end
-  object BsOffcanvas1: TBsOffcanvas
-    Left = 0
-    Top = 0
-    Width = 800
-    Height = 760
-    Align = alClient
-    Visible = False
-    ThemeColor = btcLight
-    Placement = bsoRight
-    Title = 'Offcanvas Menu'
-    BodyText = 'Content for the offcanvas goes here.'
-    PanelSize = 320
+  object BsProgress1: TBsProgress
+    Left = 524
+    Height = 16
+    Top = 289
+    Width = 200
+    ThemeColor = btcDanger
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
-  object TimerProgress: TTimer
-    Enabled = False
-    Interval = 50
-    OnTimer = TimerProgressTick
-    Left = 48
-    Top = 8
+  object BsProgress2: TBsProgress
+    Left = 524
+    Height = 16
+    Top = 312
+    Width = 200
+    Value = 80
+    ThemeColor = btcSuccess
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object BsPopover1: TBsPopover
+    Left = 480
+    Top = 296
+  end
+  object BsScrollSpy1: TBsScrollSpy
+    Items = <>
+    Left = 32
+    Top = 312
   end
 end
-

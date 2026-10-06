@@ -85,7 +85,8 @@ begin
   FTimer.OnTimer := @OnTimerTick;
 
   // 2. Control Style
-  ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   // 3. Set Properti Default
   FTitle := 'Notification';
@@ -242,8 +243,7 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
-  try
+    Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);                                                                                                                              try
     Radius := TBsGraphics.GetRadius(Height, FCornerType, 6);
     HeaderH := 32;
 

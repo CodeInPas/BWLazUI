@@ -119,7 +119,8 @@ end;
 constructor TBsAccordionItem.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque, csAcceptsControls, csCaptureMouse];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   Align := alTop;
   Height := 44; // Default terlipat (hanya header)
@@ -325,7 +326,7 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     // Background Body
     Bmp.FillRectAntialias(0, FHeaderHeight, Width, Height, ColorToBGRA(ColorToRGB(Color)));

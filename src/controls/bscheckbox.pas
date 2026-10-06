@@ -91,7 +91,9 @@ end;
 constructor TBsCheckBox.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque, csCaptureMouse, csDoubleClicks];
+  //ControlStyle := ControlStyle + [csOpaque, csCaptureMouse, csDoubleClicks];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   Width := 120;
   Height := 24;
@@ -269,7 +271,8 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+  //Bmp := TBGRABitmap.Create(Width, Height, BgColor);
+   Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     CenterY := Height div 2;
     BoxSize := 18; // Ukuran standar Checkbox Bootstrap
@@ -387,7 +390,8 @@ begin
     if Length(Caption) > 0 then
       TBsGraphics.DrawText(Bmp, TextRect, Caption, Font, TxtColor, bsaStart, 0);
 
-    Bmp.Draw(Canvas, 0, 0, False);
+  //  Bmp.Draw(Canvas, 0, 0, False);
+   Bmp.Draw(Canvas, 0, 0, False);
   finally
     Bmp.Free;
   end;

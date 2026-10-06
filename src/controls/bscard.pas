@@ -107,7 +107,8 @@ end;
 constructor TBsCard.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ControlStyle := ControlStyle + [csOpaque, csAcceptsControls];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   Width := 300;
   Height := 200;
@@ -231,8 +232,7 @@ begin
   else
     BgColor := ColorToBGRA(clBtnFace);
 
-  Bmp := TBGRABitmap.Create(Width, Height, BgColor);
-  try
+    Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);              try
     FillColor := ColorToBGRA(ColorToRGB(Color));
 
     // Tentukan warna border dan text berdasarkan tema

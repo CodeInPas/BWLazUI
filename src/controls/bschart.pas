@@ -159,7 +159,9 @@ constructor TBsChart.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   //ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
-  ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+  //ControlStyle := ControlStyle + [csOpaque, csCaptureMouse];
+  ControlStyle := ControlStyle + [csDoubleClicks, csParentBackground] - [csOpaque];
+  ParentBackground := True;
 
   FItems := TBsChartItems.Create(Self);
   FTitle := 'Performance Analytics';
@@ -458,7 +460,8 @@ begin
     BgColor := ColorToBGRA(clBtnFace);
 
  // Bmp := TBGRABitmap.Create(Width, Height, BgColor);
-  Bmp := TBGRABitmap.Create(Width, Height);
+ // Bmp := TBGRABitmap.Create(Width, Height);
+  Bmp := TBGRABitmap.Create(Width, Height, BGRAPixelTransparent);
   try
     Radius := TBsGraphics.GetRadius(Height, FCornerType, 6);
     HeaderH := 32;
