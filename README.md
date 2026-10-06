@@ -3,6 +3,7 @@
 **BWLazUI** is a modern Bootstrap-inspired UI component library for **Lazarus Free Pascal (FPC)** powered by **BGRABitmap**. This package is designed to bring a clean, elegant desktop user interface with full support for rounded corners and alpha blending without any dark border artifacts.
 
 ---
+<img width="900" height="517" alt="image" src="https://github.com/user-attachments/assets/7b1efc1f-da30-421c-b980-12bf0ab07871" />
 
 ## 🚀 Key Features
 
